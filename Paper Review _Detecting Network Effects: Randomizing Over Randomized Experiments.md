@@ -54,3 +54,7 @@ Experiment 2을 보면 BR Treatment Effect($\tilda{\mu_{br}}$)의 post-treatment
 
 ## 의의
 Interference가 있는지 탐지 할 수 있는 테스트를 할 수 있게 되었다. 따라서 A/B 테스트를 수행할 때 해당 테스트를 통해 interference 효과가 있는지 테스트 해볼 수 있고 A/B 테스트의 효과에 대한 해석을 더 정확하게 할 수 있게 되었다.
+
+## Reference
+- https://engineering.linkedin.com/blog/2019/06/detecting-interference--an-a-b-test-of-a-b-tests
+- https://dl.acm.org/doi/pdf/10.1145/3097983.3098192?casa_token=tXDsbTeb8ecAAAAA:_yETdgf1xsL8ADT4QYXA0C6o3kv9WRI8yLwlvkfx6h-QN_BPqyYOGe3wN0nuHg_3zQs2TVWZgB_zfA
