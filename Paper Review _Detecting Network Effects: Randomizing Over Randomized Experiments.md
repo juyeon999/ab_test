@@ -30,22 +30,28 @@ Network effect 때문에 평균에 차이가 생긴다면 실험 결과를 신�
 ![image](https://github.com/juyeon999/ab_test/assets/132811616/ca6488f5-9724-494e-9eeb-796ed1822365)
 
 ## 네트워크(graph) 데이터를 만들어 클러스터 만들기
-클러스터를 만들기 위해서는 그래프 데이터가 필요하다. 그래프 데이터를 생성 할 때 유의할 점은, 한 member는 하나의 클러스터에만 들어가야 한다는 점이다. 이를 위해 클러스터 간의 절단(cuts)를 찾아, 랜덤화가 될 수 있게 가능한 많은 클러스터를 보유하면서도 클러스터 간의 차이가 있게 한다. (클러스터의 수 n이 테스팅 파워를 결정하기 때문에)  
+클러스터를 만들기 위해서는 그래프 데이터가 필요하다. 그래프 데이터를 생성 할 때 유의할 점은, 한 member는 하나의 클러스터에만 들어가야 한다는 점이다. 이를 위해 클러스터 간의 절단(cuts)를 찾아, 랜덤화가 될 수 있게 가능한 많은 클러스터를 보유하면서도 클러스터 간의 차이가 있게 한다. (클러스터의 수 n이 테스팅 파워를 결정하기 때문에). 또한 클러스터의 크기가 같은, balanced clustering을 수행한다. 그 이유는 balanced clustering에서 클러스터별 추청치인 $Y^{'}$의 분산이 적게 나오기 때문이다(variance reduction).  
 reLDG 알고리즘이 가장 좋은 성능을 보였으며 grid search로 클러스터의 수를 정했습니다.
 ![image](https://github.com/juyeon999/ab_test/assets/132811616/8f527e10-c879-46a7-a894-41db997b3b86)
+- 분산, 평균 차이 $\Delta$ 구하기
+<img width="331" alt="image" src="https://github.com/juyeon999/ab_test/assets/132811616/53bbb432-32ed-4043-9933-532a153607bf">
+<img width="335" alt="image" src="https://github.com/juyeon999/ab_test/assets/132811616/0707abd3-e222-426f-befc-00bca1fd2831">
+
 
 ## 실험 A, B에 대해 control group, treatment group 만들기
-<img width="677" alt="image" src="https://github.com/juyeon999/ab_test/assets/132811616/8ad240ae-d73c-4fb7-8888-ab630de64ab1">
-
 위에서 만든 네트워크 데이터를 기반으로, **층화추출**을 적용해 시험군과 대조군을 나누는 전략을 취한다. 클러스터 개수를 최대한 늘리는 방향으로 클러스터를 나눴기 때문에 유사한 성질의 클러스터가 존재할 가능성이 높다. 이에 층화추출을 통해 랜덤 추출의 편향을 없애기 위해 
 - 층화(Strata)로 나눈다(B)
 - 그리고 랜덤하게 CR과 CBR로 나누고(C),
 - 랜덤하게 시험군과 대조군으로 나눈다(D).
 - 각 층화에서 통계량(평균, 분산)을 얻어 집계한다(E-G).  
+<img width="677" alt="image" src="https://github.com/juyeon999/ab_test/assets/132811616/8ad240ae-d73c-4fb7-8888-ab630de64ab1">
+<img width="340" alt="image" src="https://github.com/juyeon999/ab_test/assets/132811616/d2dff477-9163-45d6-aa42-42adb0aeab85">
+
 
 ## 가설 검정
 ### 통계량 구하기
 <img width="718" alt="image" src="https://github.com/juyeon999/ab_test/assets/132811616/52f79de5-a803-4a9a-a6c5-ac32ce073873">
+
 - $\mu_{BR}$: 개인 수준의 metric 차이 (treated users - control users)
 - $\mu_{CBR}$: 클러스터 수준의 metric 평균 (
 그리곤 테스트 A, B를 각각 진행하고 결과를 비교했다.
