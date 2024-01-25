@@ -48,28 +48,23 @@ reLDG 알고리즘이 가장 좋은 성능을 보였으며 grid search로 클러
 <img width="340" alt="image" src="https://github.com/juyeon999/ab_test/assets/132811616/d2dff477-9163-45d6-aa42-42adb0aeab85">
 
 
-## 가설 검정
-### 통계량 구하기
-<img width="718" alt="image" src="https://github.com/juyeon999/ab_test/assets/132811616/52f79de5-a803-4a9a-a6c5-ac32ce073873">
+## Real-time이면서 고정되지 않은 모집단을 사용하기 위한 방법
+링크드인처럼 크고 사용자가 많은 플랫폼에서는 실시간에 실험이 이루어져야 하고 모집단도 고정되지 않는 것이 좋다. 하지만 완전 무작위배정을 한다면 고정된 시간에서 고정된 모집단 크기에 대해 무작위 추출이 이루어져야한다. 따라서 $p$의 확률로 시험군과 대조군에 배정되는 베르누이 랜덤배정(Bernoulli randomized assignments, BR)을 사용하여 이 문제를 해결하였다. 
+<img width="714" alt="image" src="https://github.com/juyeon999/ab_test/assets/132811616/3ea55691-f71f-45f3-b70a-e5f8e33100db">
 
-- $\mu_{BR}$: 개인 수준의 metric 차이 (treated users - control users)
-- $\mu_{CBR}$: 클러스터 수준의 metric 평균 (
-그리곤 테스트 A, B를 각각 진행하고 결과를 비교했다.
-- Individual A/B test: 평균 차이 $\mu_{BR}$, 표준편차 $\sigma_{BR}$
-- Cluster-based A/B test: 평균 차이 $\mu_{CBR}$, 표준편차 $\sigma_{CBR}$
-
-### 검정
+## 검정
 Indiviual A/B test (A)와 cluster-based A/B test (B)간에 효과 차이가 있나 검증한다.
 - 두 테스트간 효과 차이: $\Delta = \mu_{BR} - \mu_{CBR}$
 - 가설 검정: $H_0: \Delta = 0$, $H_a: \Delta \neq 0$
-
-![image](https://github.com/juyeon999/ab_test/assets/132811616/209ae3c1-6ed7-451d-a184-0c2cb5f3c163)
 만약 귀무가설을 기각하면 우리는 interference가 있다고 결론 내릴 수 있는 것이다. 
 
-## 결과
-Experiment 2을 보면 BR Treatment Effect($\tilde{\mu_{br}}$)의 post-treatment와 CBR Treatment Effect($\tilde{\mu_{cbr}}$)의 post-treatment간의 차이가 크다. 즉 Reject 귀무가설을 통해 interference가 있다고 결론 내릴 수 있다.
+## 결과 해석
+![image](https://github.com/juyeon999/ab_test/assets/132811616/209ae3c1-6ed7-451d-a184-0c2cb5f3c163)
+- Experiment1 and 2: 모집단의 수에 차이를 두어 모집단의 수가 테스팅에 미치는 결과 확인(Variance reduction)
+- pre-treatment and post-treatment: 결과에 Systematic bias 유무를 확인하기 위해 treatment 적용 전 네트워크 효과를 검증한다 (pre-treatment).
+- Experiment2에서 pv-value가 0.04로 귀무가설을 기각했다. 즉 네트워크 효과가 있다고 결론 내릴 수 있다.
 
-## 의의
+## 개인적인 의의
 Interference가 있는지 탐지 할 수 있는 테스트를 할 수 있게 되었다. 따라서 A/B 테스트를 수행할 때 해당 테스트를 통해 interference 효과가 있는지 테스트 해볼 수 있고 A/B 테스트의 효과에 대한 해석을 더 정확하게 할 수 있게 되었다.
 
 ## Reference
